@@ -35,12 +35,13 @@
   async function handleImageUpload(input) {
   const file = input.files[0];
   const email = emailInput.value.trim();
+
   if (!file || !email || !email.includes("@")) {
     alert("Valid email and image required.");
     return;
   }
 
-   // Show alert when a picture is uploaded or taken
+  // Show alert when a picture is uploaded or taken
   if (input.id === "uploadInput") {
     alert("Picture uploaded successfully!");
   } else if (input.id === "cameraInput") {
