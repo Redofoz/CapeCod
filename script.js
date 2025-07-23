@@ -93,8 +93,20 @@
   // Events
   uploadBtn.addEventListener("click", () => uploadInput.click());
   cameraBtn.addEventListener("click", () => cameraInput.click());
-  uploadInput.addEventListener("change", () => handleImageUpload(uploadInput));
-  cameraInput.addEventListener("change", () => handleImageUpload(cameraInput));
+
+  uploadInput.addEventListener("change", () => {
+    if (uploadInput.files.length > 0) {
+      alert("Picture uploaded successfully!");
+      handleImageUpload(uploadInput);
+    }
+  });
+  
+  cameraInput.addEventListener("change", () => {
+    if (cameraInput.files.length > 0) {
+      alert("Picture taken successfully!");
+      handleImageUpload(cameraInput);
+    }
+  });
 
   uploadBtn.classList.add("locked");
   cameraBtn.classList.add("locked");
