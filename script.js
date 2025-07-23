@@ -91,43 +91,47 @@
   uploadBtn.classList.add("locked");
   cameraBtn.classList.add("locked");
 
-  unlockBtn.addEventListener("click", function () {
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
+ unlockBtn.addEventListener("click", function () {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
 
-    if (!email || !email.includes("@")) {
-      passwordMessage.textContent = "Please enter a valid email address.";
-      passwordMessage.style.display = "block";
-      return;
-    }
+  if (!email || !email.includes("@")) {
+    passwordMessage.textContent = "Please enter a valid email address.";
+    passwordMessage.style.display = "block";
+    return;
+  }
 
-    fetch(`${serverUrl}/check-password`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, password: password })
-    })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 'allowed') {
-          uploadBtn.classList.remove("locked");
-          cameraBtn.classList.remove("locked");
-          uploadBtn.classList.add("unlocked");
-          cameraBtn.classList.add("unlocked");
-          passwordInput.style.display = "none";
-          unlockBtn.style.display = "none";
-          emailInput.style.display = "none";
-          passwordMessage.style.display = "none";
-        } else {
-          passwordMessage.textContent = "Incorrect password.";
-          passwordMessage.style.display = "block";
-        }
-      })
-      .catch(err => {
-        console.error("Password check failed:", err);
-        passwordMessage.textContent = "Server error.";
+  fetch(`${serverUrl}/check-password`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: password })
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'allowed') {
+        uploadBtn.classList.remove("locked");
+        cameraBtn.classList.remove("locked");
+        uploadBtn.classList.add("unlocked");
+        cameraBtn.classList.add("unlocked");
+
+        passwordInput.style.display = "none";
+        unlockBtn.style.display = "none";
+        emailInput.style.display = "none";
+        passwordMessage.style.display = "none";
+
+        // 👁️ Hides the eye toggle icon too:
+        toggleEye.style.display = "none";
+      } else {
+        passwordMessage.textContent = "Incorrect password.";
         passwordMessage.style.display = "block";
-      });
-  });
+      }
+    })
+    .catch(err => {
+      console.error("Password check failed:", err);
+      passwordMessage.textContent = "Server error.";
+      passwordMessage.style.display = "block";
+    });
+});
 
 function togglePassword() {
   const input = document.getElementById("passwordInput");
