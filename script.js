@@ -96,14 +96,12 @@
 
   uploadInput.addEventListener("change", () => {
     if (uploadInput.files.length > 0) {
-      alert("Picture uploaded successfully!");
       handleImageUpload(uploadInput);
     }
   });
   
   cameraInput.addEventListener("change", () => {
     if (cameraInput.files.length > 0) {
-      alert("Picture taken successfully!");
       handleImageUpload(cameraInput);
     }
   });
