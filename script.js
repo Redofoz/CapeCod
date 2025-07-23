@@ -40,6 +40,13 @@
     return;
   }
 
+   // Show alert when a picture is uploaded or taken
+  if (input.id === "uploadInput") {
+    alert("Picture uploaded successfully!");
+  } else if (input.id === "cameraInput") {
+    alert("Picture taken successfully!");
+  }
+
   const timestamp = getTimestamp();
   const baseName = `${email} ${timestamp}`;
 
