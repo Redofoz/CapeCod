@@ -101,18 +101,6 @@
       return;
     }
 
-    function togglePassword() {
-    const input = document.getElementById("passwordInput");
-    const eye = document.getElementById("toggleEye");
-    if (input.type === "password") {
-      input.type = "text";
-      eye.textContent = "🙈";
-    } else {
-      input.type = "password";
-      eye.textContent = "👁️";
-    }
-  }
-
     fetch(`${serverUrl}/check-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -140,3 +128,16 @@
         passwordMessage.style.display = "block";
       });
   });
+
+function togglePassword() {
+  const input = document.getElementById("passwordInput");
+  const eye = document.getElementById("toggleEye");
+
+  if (input.type === "password") {
+    input.type = "text";
+    eye.textContent = "🙈";
+  } else {
+    input.type = "password";
+    eye.textContent = "👁️";
+  }
+}
