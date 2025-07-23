@@ -70,17 +70,30 @@
 <div style="text-align: center; margin-top: 1em;">
   <input type="email" id="emailInput" placeholder="Enter your email" />
 </div>
-<div style="text-align: center; margin-top: 1em; position: relative; display: inline-block;">
-  <input type="password" id="passwordInput" placeholder="Enter password" style="padding-right: 2.5em;" />
-  <span onclick="togglePassword()" style="
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 0.9em;
-    color: #555;
-  " id="toggleEye">👁️</span>
+<div style="text-align: center; margin-top: 1em;">
+  <div style="position: relative; display: inline-block;">
+    <input 
+      type="password" 
+      id="passwordInput" 
+      placeholder="Enter password" 
+      style="padding-right: 2.5em; height: 2em; font-size: 1em;" 
+    />
+    
+    <!-- Eye icon -->
+    <span 
+      onclick="togglePassword()" 
+      style="
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 1.2em;
+      " 
+      id="toggleEye"
+    >👁️</span>
+  </div>
+  
   <br />
   <button id="unlockBtn" style="margin-top: 0.5em;">Unlock Upload</button>
   <div id="passwordMessage" style="color: red; display: none;">Wrong password</div>
@@ -98,5 +111,6 @@
       <div class="links"></div>
    
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>
