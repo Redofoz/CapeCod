@@ -205,3 +205,26 @@ button.unlocked {
   pointer-events: auto;
   transition: opacity 0.3s ease;
 }
+
+/* Mobile Styles */
+@media (max-width: 600px) {
+  .title {
+    font-size: 40px;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .illustration {
+    max-width: 90%;
+    max-height: 200px;
+    margin-top: 1rem;
+  }
+
+  .wrapper {
+    margin: 0 0.5rem;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+}
