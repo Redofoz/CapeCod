@@ -33,6 +33,11 @@
 
   // Main image handler
   async function handleImageUpload(input) {
+    if (input.id === "uploadInput") {
+    alert("Picture uploaded successfully!");
+    } else if (input.id === "cameraInput") {
+    alert("Picture taken successfully!");
+    }
   const file = input.files[0];
   const email = emailInput.value.trim();
 
