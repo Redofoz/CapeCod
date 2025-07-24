@@ -15,7 +15,7 @@
   const passwordMessage = document.getElementById("passwordMessage");
   const emailInput = document.getElementById("emailInput");
 
-  const serverUrl = "https://abed99f184e8.ngrok-free.app";
+  const serverUrl = "https://01d5cf7f8227.ngrok-free.app";
 
   // Utilities
   function getTimestamp() {
