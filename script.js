@@ -32,7 +32,6 @@
   }
 
   // Main image handler
-/ Main image handler
 async function handleImageUpload(input) {
   if (input.id === "uploadInput") {
     alert("Picture uploaded successfully!");
