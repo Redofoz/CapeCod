@@ -88,10 +88,6 @@
     })
     .then(result => console.log("Upload successful:", result))
     .catch(err => console.error("Error uploading:", err));
-    .finally(() => {
-    // Reset so the same file triggers change next time
-    input.value = "";
-  });
 }
 
   // Events
