@@ -32,21 +32,22 @@
   }
 
   // Main image handler
-  async function handleImageUpload(input) {
-    if (input.id === "uploadInput") {
+/ Main image handler
+async function handleImageUpload(input) {
+  if (input.id === "uploadInput") {
     alert("Picture uploaded successfully!");
-    } else if (input.id === "cameraInput") {
+  } else if (input.id === "cameraInput") {
     alert("Picture taken successfully!");
-    }
+  }
+  
   const file = input.files[0];
   const email = emailInput.value.trim();
 
   if (!file || !email || !email.includes("@")) {
     alert("Valid email and image required.");
+    input.value = ''; // Clear the input even on error
     return;
   }
-
-
 
   const timestamp = getTimestamp();
   const baseName = `${email} ${timestamp}`;
@@ -86,8 +87,14 @@
       if (!res.ok) throw new Error("Upload failed");
       return res.text();
     })
-    .then(result => console.log("Upload successful:", result))
-    .catch(err => console.error("Error uploading:", err));
+    .then(result => {
+      console.log("Upload successful:", result);
+      input.value = ''; // Clear the input after successful upload
+    })
+    .catch(err => {
+      console.error("Error uploading:", err);
+      input.value = ''; // Clear the input even on error
+    });
 }
 
   // Events
