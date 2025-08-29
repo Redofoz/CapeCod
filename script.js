@@ -16,7 +16,7 @@
   const emailInput = document.getElementById("emailInput");
   const toggleEye = document.getElementById("toggleEye");
 
-  const serverUrl = "https://1e78553d22ce.ngrok-free.app";
+  const serverUrl = "https://e946e0e4d3e7.ngrok-free.app";
 
   // Utilities
   function getTimestamp() {
