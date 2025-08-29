@@ -14,6 +14,7 @@
   const unlockBtn = document.getElementById("unlockBtn");
   const passwordMessage = document.getElementById("passwordMessage");
   const emailInput = document.getElementById("emailInput");
+  const toggleEye = document.getElementById("toggleEye")
 
   const serverUrl = "https://2cb7f8635f37.ngrok-free.app";
 
