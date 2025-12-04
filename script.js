@@ -97,26 +97,26 @@ async function handleImageUpload(input) {
     });
 }
 
-// Events
-uploadBtn.addEventListener("click", () => uploadInput.click());
-cameraBtn.addEventListener("click", () => cameraInput.click());
+  // Events
+  uploadBtn.addEventListener("click", () => uploadInput.click());
+  cameraBtn.addEventListener("click", () => cameraInput.click());
 
-uploadInput.addEventListener("change", () => {
-  if (uploadInput.files.length > 0) {
-    handleImageUpload(uploadInput);
-  }
-});
+  uploadInput.addEventListener("change", () => {
+    if (uploadInput.files.length > 0) {
+      handleImageUpload(uploadInput);
+    }
+  });
+  
+  cameraInput.addEventListener("change", () => {
+    if (cameraInput.files.length > 0) {
+      handleImageUpload(cameraInput);
+    }
+  });
 
-cameraInput.addEventListener("change", () => {
-  if (cameraInput.files.length > 0) {
-    handleImageUpload(cameraInput);
-});
+  uploadBtn.classList.add("locked");
+  cameraBtn.classList.add("locked");
 
-// Lock/unlock buttons
-uploadBtn.classList.add("locked");
-cameraBtn.classList.add("locked");
-
-unlockBtn.addEventListener("click", function () {
+ unlockBtn.addEventListener("click", function () {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
@@ -143,77 +143,6 @@ unlockBtn.addEventListener("click", function () {
         unlockBtn.style.display = "none";
         emailInput.style.display = "none";
         passwordMessage.style.display = "none";
-
-        toggleEye.style.display = "none";
-      } else {
-        passwordMessage.textContent = "Incorrect password.";
-        passwordMessage.style.display = "block";
-      }
-    })
-    .catch(err => {
-      console.error("Password check failed:", err);
-      passwordMessage.textContent = "Server error.";
-      passwordMessage.style.display = "block";
-    });
-});
-
-function togglePassword() {
-  const input = document.getElementById("passwordInput");
-  const eye = document.getElementById("toggleEye");
-
-  if (input.type === "password") {
-    input.type = "text";
-    eye.textContent = "🙈";
-  } else {
-    input.type = "password";
-    eye.textContent = "👁️";
-  }
-}
-
-// Simplified image upload handler
-async function handleImageUpload(input) {
-  const file = input.files[0];
-  const email = emailInput.value.trim();
-
-  if (!file || !email || !email.includes("@")) {
-    alert("Valid email and image required.");
-    input.value = ''; // Clear input on error
-    return;
-  }
-
-  const allowedTypes = ["image/jpeg", "image/png", "image/bmp"];
-  if (!allowedTypes.includes(file.type)) {
-    alert("Only JPG, PNG, or BMP files are allowed.");
-    input.value = '';
-    return;
-  }
-
-  const timestamp = new Date().toISOString().replace(/[:T]/g, '-').replace(/\..+/, '') + '-' + new Date().getMilliseconds();
-  const extension = file.name.split('.').pop();
-  const fileName = `${email} ${timestamp}.${extension}`;
-
-  const formData = new FormData();
-  formData.append("imageFile", file, fileName);
-
-  fetch(`${serverUrl}/upload`, {
-    method: "POST",
-    body: formData,
-  })
-    .then(res => {
-      if (!res.ok) throw new Error("Upload failed");
-      return res.text();
-    })
-    .then(result => {
-      console.log("Upload successful:", result);
-      input.value = ''; // Clear input after upload
-      alert("Image uploaded successfully!");
-    })
-    .catch(err => {
-      console.error("Error uploading:", err);
-      input.value = ''; // Clear input on error
-      alert("Error uploading image.");
-    });
-}
 
         // 👁️ Hides the eye toggle icon too:
         toggleEye.style.display = "none";
