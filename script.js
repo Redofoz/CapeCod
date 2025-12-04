@@ -34,50 +34,28 @@
 
   // Main image handler
 async function handleImageUpload(input) {
-  if (input.id === "uploadInput") {
-    alert("Picture uploaded successfully!");
-  } else if (input.id === "cameraInput") {
-    alert("Picture taken successfully!");
-  }
-  
   const file = input.files[0];
   const email = emailInput.value.trim();
 
   if (!file || !email || !email.includes("@")) {
     alert("Valid email and image required.");
-    input.value = ''; // Clear the input even on error
+    input.value = ''; // Clear input on error
     return;
   }
 
-  const timestamp = getTimestamp();
-  const baseName = `${email} ${timestamp}`;
+  // Only allow specific image types
+  const allowedTypes = ["image/jpeg", "image/png", "image/bmp"];
+  if (!allowedTypes.includes(file.type)) {
+    alert("Only JPG, PNG, or BMP files are allowed.");
+    input.value = '';
+    return;
+  }
 
-  const key = crypto.getRandomValues(new Uint8Array(16)); // 128-bit key
-  const iv = crypto.getRandomValues(new Uint8Array(12));  // GCM IV
+  const timestamp = new Date().toISOString().replace(/[:T]/g, '-').replace(/\..+/, '') + '-' + new Date().getMilliseconds();
+  const fileName = `${email} ${timestamp}.${file.name.split('.').pop()}`; // keep original extension
 
-  const cryptoKey = await crypto.subtle.importKey("raw", key, { name: "AES-GCM" }, true, ["encrypt"]);
-  const imageData = await file.arrayBuffer();
-  const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, cryptoKey, imageData);
-
-  // Combine IV + encrypted data into one file
-  const combined = new Uint8Array(iv.length + encrypted.byteLength);
-  combined.set(iv, 0);
-  combined.set(new Uint8Array(encrypted), iv.length);
-  const encryptedBlob = new Blob([combined], { type: "application/octet-stream" });
-
-  // Export the key as Base64
-  const exportedKey = await crypto.subtle.exportKey("raw", cryptoKey);
-  const base64Key = btoa(String.fromCharCode(...new Uint8Array(exportedKey)));
-  const base64IV = btoa(String.fromCharCode(...iv));
-
-  // Create key file
-  const keyContent = `Encryption Key (Base64): ${base64Key}\nIV (Base64): ${base64IV}`;
-  const keyBlob = new Blob([keyContent], { type: "text/plain" });
-
-  // Prepare FormData
   const formData = new FormData();
-  formData.append("encryptedFile", encryptedBlob, `${baseName}.bin`);
-  formData.append("keyFile", keyBlob, `${baseName}.txt`);
+  formData.append("imageFile", file, fileName);
 
   fetch(`${serverUrl}/upload`, {
     method: "POST",
@@ -89,11 +67,13 @@ async function handleImageUpload(input) {
     })
     .then(result => {
       console.log("Upload successful:", result);
-      input.value = ''; // Clear the input after successful upload
+      input.value = ''; // Clear input after upload
+      alert("Image uploaded successfully!");
     })
     .catch(err => {
       console.error("Error uploading:", err);
-      input.value = ''; // Clear the input even on error
+      input.value = ''; // Clear input on error
+      alert("Error uploading image.");
     });
 }
 
